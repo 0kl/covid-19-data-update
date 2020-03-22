@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ''
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    PermissionsBoundary:
+      Fn::Sub: arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary
+Parameters:
+  AppId:
+    Type: String
+Resources:
+  scheduledEventLoggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: scheduledEventLoggerFunction
+      Handler: src/handlers/scheduled-event-logger.scheduledEventLoggerHandler
+      Runtime: nodejs10.x
+      Description: A Lambda function that logs the payload of scheduled events.
+      MemorySize: 128
+      Timeout: 60
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      Events:
+        SimpleCWEEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 * * * ? *)

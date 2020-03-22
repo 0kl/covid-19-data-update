@@ -1,0 +1,13 @@
+const FILE_STATUS = {
+    INGESTED: 0
+    , FILE_PROCESS_STARTED: 1
+    , ERROR_AFTER_DOWNLOAD: 2
+    , ERROR_AFTER_ORIGINAL_S3: 3
+    , ERROR_DURING_CLEAN: 4
+    , ERROR_DB: 5
+    , ERROR_ADAPTER: 6
+    , DUPLICATE_HASH: -1
+    ,
+}
+
+module.exports = { FILE_STATUS }
